@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
 use App\Orchid\Screens\TaskScreen;
+use App\Orchid\Screens\StateScreen;
 
 
 
@@ -105,6 +106,9 @@ Route::screen('task', TaskScreen::class)
             ->parent('platform.index')
             ->push('Task');
     });
+
+Route::screen('state', StateScreen::class)->name('state');
+
 
 Route::screen('/examples/form/fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('/examples/form/advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
