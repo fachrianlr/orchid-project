@@ -12,6 +12,8 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\PostEditScreen;
+use App\Orchid\Screens\PostListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -96,20 +98,6 @@ Route::screen('example', ExampleScreen::class)
         ->parent('platform.index')
         ->push('Example Screen'));
 
-//My Custom Routes
-// Route::screen('task', TaskScreen::class)->name('platform.task');
-
-Route::screen('task', TaskScreen::class)
-    ->name('platform.task')
-    ->breadcrumbs(function (Trail $trail) {
-        return $trail
-            ->parent('platform.index')
-            ->push('Task');
-    });
-
-Route::screen('state', StateScreen::class)->name('state');
-
-
 Route::screen('/examples/form/fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('/examples/form/advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
 Route::screen('/examples/form/editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
@@ -121,3 +109,22 @@ Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.ex
 Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');
+
+//My Custom Routes
+// Route::screen('task', TaskScreen::class)->name('platform.task');
+
+Route::screen('task', TaskScreen::class)
+    ->name('platform.task')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push('Task');
+    });
+
+Route::screen('state', StateScreen::class)->name('platform.state');
+
+// Post routes
+Route::screen('post/list', PostListScreen::class)
+    ->name('platform.post.list');
+Route::screen('post/{post?}', PostEditScreen::class)
+    ->name('platform.post.edit');
