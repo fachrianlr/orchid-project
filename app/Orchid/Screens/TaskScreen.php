@@ -76,6 +76,19 @@ class TaskScreen extends Screen
                 ->title('Create')
                 ->applyButton('Create'),
 
+            // Edit modal
+            Layout::modal('editTaskModal', Layout::rows([
+                Input::make('task.id')->type('hidden'),
+                Input::make('task.name')
+                    ->title('Name')
+                    ->placeholder('Enter task name')
+                    ->help('The name of the task to be edited.')
+                    ->value('task.name'),
+            ]))
+                ->title('Edit Task')
+                ->applyButton('Save Changes')
+                ->async('asyncTask'),
+
             Layout::table('tasks', [
                 TD::make('name'),
                 TD::make('active'),
@@ -84,6 +97,14 @@ class TaskScreen extends Screen
                 TD::make('actions')
                     ->render(function (Task $task) {
                         return '<div style="display: flex; gap: 5px;">' .
+                            ModalToggle::make('Edit')
+                            ->modal('editTaskModal')
+                            ->method('edit')
+                            ->modalTitle('Edit Task')
+                            ->asyncParameters([
+                                'task' => $task->id,
+                            ])
+                            ->class('btn btn-warning') .
                             Button::make('Delete')
                             ->confirm('After deleting, the task will be gone forever.')
                             ->method('delete', ['task' => $task->id])
@@ -109,5 +130,22 @@ class TaskScreen extends Screen
     public function delete(Task $task)
     {
         $task->delete();
+    }
+
+    public function edit(Task $task, Request $request)
+    {
+        $request->validate([
+            'task.name' => 'required|max:255',
+        ]);
+
+        $task->name = $request->input('task.name');
+        $task->save();
+    }
+
+    public function asyncTask(Task $task)
+    {
+        return [
+            'task' => $task
+        ];
     }
 }
