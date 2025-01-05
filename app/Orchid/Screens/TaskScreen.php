@@ -82,8 +82,7 @@ class TaskScreen extends Screen
                 Input::make('task.name')
                     ->title('Name')
                     ->placeholder('Enter task name')
-                    ->help('The name of the task to be edited.')
-                    ->value('task.name'),
+                    ->help('The name of the task to be edited.'),
             ]))
                 ->title('Edit Task')
                 ->applyButton('Save Changes')
